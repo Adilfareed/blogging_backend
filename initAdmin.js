@@ -1,4 +1,4 @@
-const User = require("./models/user"); // Path to your User model
+const User = require("./models/user");
 const bcrypt = require("bcrypt");
 
 const initAdmin = async () => {
@@ -13,8 +13,17 @@ const initAdmin = async () => {
 
     // Check if the admin user already exists
     const existingAdmin = await User.findOne({ email: adminEmail });
+
     if (existingAdmin) {
-      console.log("Admin user already exists.");
+      const isPasswordMatch = await bcrypt.compare(adminPassword, existingAdmin.password);
+      if (!isPasswordMatch) {
+        const hashedPassword = await bcrypt.hash(adminPassword, 10);
+        existingAdmin.password = hashedPassword;
+        await existingAdmin.save();
+        console.log("Admin password updated.");
+      } else {
+        console.log("Admin user already exists with matching credentials.");
+      }
       return;
     }
 
