@@ -38,3 +38,38 @@ exports.getBlogById = async (req, res) => {
         res.status(500).json({ message: 'Server Error', error: err.message });
     }
 };
+exports.updateBlog = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, description } = req.body;
+
+        // Update the image if provided
+        const updatedData = {
+            title,
+            description,
+            ...(req.file && { image: req.file.filename }),
+        };
+
+        const blog = await Blog.findByIdAndUpdate(id, updatedData, { new: true });
+
+        if (!blog) return res.status(404).json({ message: 'Blog not found' });
+
+        res.status(200).json({ message: 'Blog updated successfully', blog });
+    } catch (err) {
+        res.status(500).json({ message: 'Server Error', error: err.message });
+    }
+};
+
+exports.deleteBlog = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const blog = await Blog.findByIdAndDelete(id);
+
+        if (!blog) return res.status(404).json({ message: 'Blog not found' });
+
+        res.status(200).json({ message: 'Blog deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ message: 'Server Error', error: err.message });
+    }
+};

@@ -1,47 +1,35 @@
 const User = require("./models/user");
-const bcrypt = require("bcrypt");
 
 const initAdmin = async () => {
   try {
     const adminEmail = process.env.ADMIN_EMAIL;
     const adminPassword = process.env.ADMIN_PASSWORD;
 
+    // Check if admin email and password are set in .env
     if (!adminEmail || !adminPassword) {
-      console.error("Admin email or password not set in .env file.");
+      console.error("Admin email or password is not set in .env file.");
       return;
     }
 
-    // Check if the admin user already exists
-    const existingAdmin = await User.findOne({ email: adminEmail });
-
+    // Check if an admin already exists
+    const existingAdmin = await User.findOne({ email: adminEmail, role: "admin" });
     if (existingAdmin) {
-      const isPasswordMatch = await bcrypt.compare(adminPassword, existingAdmin.password);
-      if (!isPasswordMatch) {
-        const hashedPassword = await bcrypt.hash(adminPassword, 10);
-        existingAdmin.password = hashedPassword;
-        await existingAdmin.save();
-        console.log("Admin password updated.");
-      } else {
-        console.log("Admin user already exists with matching credentials.");
-      }
+      console.log("Admin account already exists.");
       return;
     }
 
-    // Hash the admin password
-    const hashedPassword = await bcrypt.hash(adminPassword, 10);
-
-    // Create a new admin user
-    const adminUser = new User({
-      name: "Admin User",
+    // Create the admin user
+    const admin = new User({
+      name: "Admin",
       email: adminEmail,
-      password: hashedPassword,
+      password: adminPassword,
       role: "admin",
     });
 
-    await adminUser.save();
-    console.log("Admin user created successfully.");
+    await admin.save();
+    console.log("Admin account created successfully.");
   } catch (error) {
-    console.error("Error creating admin user:", error.message);
+    console.error("Error initializing admin account:", error.message);
   }
 };
 
