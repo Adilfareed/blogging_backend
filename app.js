@@ -12,7 +12,7 @@ const app = express();
 
 // CORS Configuration - Allow all origins
 const corsOptions = {
-  origin: 'https://blogging-frontend-mocha.vercel.app', 
+  origin: 'http://localhost:3000', 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // Allowed methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
   credentials: true, // Allow credentials
