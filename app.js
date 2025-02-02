@@ -10,7 +10,7 @@ const initAdmin = require("./initAdmin");
 
 const app = express();
 
-// CORS Configuration - Allow all origins
+// CORS Configuration - Allow all arignas for cors
 const corsOptions = {
   origin: ["http://localhost:3000", "https://your-frontend-domain.com"], // Replace with your frontend domains
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
