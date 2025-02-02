@@ -12,9 +12,10 @@ const app = express();
 
 // CORS Configuration - Allow all origins
 const corsOptions = {
-  origin: '*', // Allow all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // Allow common methods
+  origin: 'https://blogging-frontend-vgvmrxoim-adilfareeds-projects.vercel.app', // Replace with your frontend URL without trailing slash
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allow common methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+  credentials: true, // Allow cookies if needed for authentication
 };
 app.use(cors(corsOptions));
 
