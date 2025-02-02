@@ -10,12 +10,12 @@ const initAdmin = require("./initAdmin");
 
 const app = express();
 
-// CORS Configuration - Allow all origins
+// CORS Configuration - Allow specific frontend
 const corsOptions = {
-  origin: 'https://blogging-frontend-inky.vercel.app', // Replace with your frontend URL without trailing slash
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allow common methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
-  credentials: true, // Allow cookies if needed for authentication
+  origin: 'https://blogging-frontend-inky.vercel.app', // Frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allowed HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  credentials: true, // Allow cookies or credentials
 };
 app.use(cors(corsOptions));
 
@@ -31,6 +31,11 @@ initAdmin();
 // Routes
 app.use('/api', blogRoutes);
 app.use("/api/auth", authRoutes);
+
+// Handle undefined routes (Optional, but good practice)
+app.use((req, res, next) => {
+  res.status(404).send('Route not found');
+});
 
 // Start Server
 const PORT = process.env.PORT || 5000;
