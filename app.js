@@ -11,8 +11,14 @@ const initAdmin = require("./initAdmin");
 const app = express();
 
 // CORS Configuration - Allow all origins
-app.use(cors()); // This allows all origins by default
-app.options('*', cors());
+const corsOptions = {
+  origin: ["http://localhost:3000", "https://your-frontend-domain.com"], // Replace with your frontend domains
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true, // Allow cookies and authorization headers
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 // Middleware
 app.use(express.json());
