@@ -12,7 +12,7 @@ const app = express();
 
 // CORS Configuration - Allow all origins
 const corsOptions = {
-  origin: 'https://blogging-frontend-vgvmrxoim-adilfareeds-projects.vercel.app', // Replace with your frontend URL without trailing slash
+  origin: 'https://blogging-frontend-inky.vercel.app', // Replace with your frontend URL without trailing slash
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allow common methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
   credentials: true, // Allow cookies if needed for authentication
