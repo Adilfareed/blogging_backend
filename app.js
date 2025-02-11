@@ -10,7 +10,7 @@ const initAdmin = require("./initAdmin");
 
 const app = express();
 
-// CORS Configuration - Allow all arignas for cors
+// CORS Configuration - Allow all origins for cors
 const corsOptions = {
   origin: ["http://localhost:3000", "https://your-frontend-domain.com"], // Replace with your frontend domains
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -23,7 +23,9 @@ app.options("*", cors(corsOptions));
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// ❌ Remove local uploads serving since we're using Supabase
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connect Database
 connectDB();

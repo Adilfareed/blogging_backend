@@ -1,20 +1,9 @@
 const multer = require('multer');
-const path = require('path');
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './uploads/');
-        console.log('File received:', file);
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}_${file.originalname}`);
-    },
-    
-});
+const storage = multer.memoryStorage(); // Store file in memory
 
 const fileFilter = (req, file, cb) => {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-   
     if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
     } else {
